@@ -153,8 +153,7 @@ defmodule Ecto.Repo do
     quote bind_quoted: [opts: opts] do
       @behaviour Ecto.Repo
 
-      {otp_app, adapter, behaviours} =
-        Ecto.Repo.Supervisor.compile_config(__MODULE__, opts)
+      {otp_app, adapter, behaviours} = Ecto.Repo.Supervisor.compile_config(__MODULE__, opts)
 
       @otp_app otp_app
       @adapter adapter
@@ -259,7 +258,13 @@ defmodule Ecto.Repo do
         end
 
         def insert_all(schema_or_source, entries, opts \\ []) do
-          Ecto.Repo.Schema.insert_all(__MODULE__, get_dynamic_repo(), schema_or_source, entries, opts)
+          Ecto.Repo.Schema.insert_all(
+            __MODULE__,
+            get_dynamic_repo(),
+            schema_or_source,
+            entries,
+            opts
+          )
         end
       end
 
@@ -318,7 +323,12 @@ defmodule Ecto.Repo do
         end
 
         def preload(struct_or_structs_or_nil, preloads, opts \\ []) do
-          Ecto.Repo.Preloader.preload(struct_or_structs_or_nil, get_dynamic_repo(), preloads, opts)
+          Ecto.Repo.Preloader.preload(
+            struct_or_structs_or_nil,
+            get_dynamic_repo(),
+            preloads,
+            opts
+          )
         end
 
         def prepare_query(operation, query, opts), do: {query, opts}
@@ -398,7 +408,7 @@ defmodule Ecto.Repo do
 
   ## Options
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
   """
   @callback checkout((() -> result), opts :: Keyword.t()) :: result when result: var
 
@@ -491,8 +501,19 @@ defmodule Ecto.Repo do
 
   ## Ecto.Adapter.Queryable
 
-  @optional_callbacks get: 3, get!: 3, get_by: 3, get_by!: 3, aggregate: 4, exists?: 2,
-                      one: 2, one!: 2, preload: 3, all: 2, stream: 2, update_all: 3, delete_all: 2
+  @optional_callbacks get: 3,
+                      get!: 3,
+                      get_by: 3,
+                      get_by!: 3,
+                      aggregate: 4,
+                      exists?: 2,
+                      one: 2,
+                      one!: 2,
+                      preload: 3,
+                      all: 2,
+                      stream: 2,
+                      update_all: 3,
+                      delete_all: 2
 
   @doc """
   Fetches a single struct from the data store where the primary key matches the
@@ -510,7 +531,7 @@ defmodule Ecto.Repo do
       in the schema. For more information see the "Query Prefix" section of the
       `Ecto.Query` documentation.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Example
 
@@ -534,7 +555,7 @@ defmodule Ecto.Repo do
       in the schema. For more information see the "Query Prefix" section of the
       `Ecto.Query` documentation.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Example
 
@@ -560,7 +581,7 @@ defmodule Ecto.Repo do
       in the schema. For more information see the "Query Prefix" section of the
       `Ecto.Query` documentation.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Example
 
@@ -590,7 +611,7 @@ defmodule Ecto.Repo do
       `Ecto.Query` documentation.
 
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Example
 
@@ -626,7 +647,7 @@ defmodule Ecto.Repo do
       in the schema. For more information see the "Query Prefix" section of the
       `Ecto.Query` documentation.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Examples
 
@@ -662,7 +683,7 @@ defmodule Ecto.Repo do
       in the schema. For more information see the "Query Prefix" section of the
       `Ecto.Query` documentation.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Examples
 
@@ -693,7 +714,7 @@ defmodule Ecto.Repo do
       in the schema. For more information see the "Query Prefix" section of the
       `Ecto.Query` documentation.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Examples
 
@@ -721,7 +742,7 @@ defmodule Ecto.Repo do
       in the schema. For more information see the "Query Prefix" section of the
       `Ecto.Query` documentation.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
   """
   @callback one!(queryable :: Ecto.Queryable.t(), opts :: Keyword.t()) ::
               Ecto.Schema.t()
@@ -748,7 +769,7 @@ defmodule Ecto.Repo do
       will use the same prefix as the one in the given collection. This
       option allows the prefix to be changed.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Examples
 
@@ -802,7 +823,7 @@ defmodule Ecto.Repo do
       in the schema. For more information see the "Query Prefix" section of the
       `Ecto.Query` documentation.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Example
 
@@ -834,7 +855,7 @@ defmodule Ecto.Repo do
     * `:max_rows` - The number of rows to load from the database as we stream.
       It is supported at least by Postgres and MySQL and defaults to 500.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Example
 
@@ -868,7 +889,7 @@ defmodule Ecto.Repo do
       in Postgres or the database in MySQL). This overrides the prefix set
       in the query and any `@schema_prefix` set in the schema.
 
-  See the "Shared options" section at the module documentation for
+  See the "[Shared options](#module-shared-options)" section at the module documentation for
   remaining options.
 
   ## Examples
@@ -910,7 +931,7 @@ defmodule Ecto.Repo do
       in Postgres or the database in MySQL). This overrides the prefix set
       in the query and any `@schema_prefix` set in the schema.
 
-  See the "Shared options" section at the module documentation for
+  See the "[Shared options](#module-shared-options)" section at the module documentation for
   remaining options.
 
   ## Examples
@@ -924,8 +945,15 @@ defmodule Ecto.Repo do
 
   ## Ecto.Adapter.Schema
 
-  @optional_callbacks insert_all: 3, insert: 2, insert!: 2, update: 2, update!: 2,
-                      delete: 2, delete!: 2, insert_or_update: 2, insert_or_update!: 2,
+  @optional_callbacks insert_all: 3,
+                      insert: 2,
+                      insert!: 2,
+                      update: 2,
+                      update!: 2,
+                      delete: 2,
+                      delete!: 2,
+                      insert_or_update: 2,
+                      insert_or_update!: 2,
                       prepare_query: 3
 
   @doc """
@@ -983,7 +1011,7 @@ defmodule Ecto.Repo do
       database without any sanitization, such as
       `ON CONFLICT (coalesce(firstname, ""), coalesce(lastname, ""))`.
 
-  See the "Shared options" section at the module documentation for
+  See the "[Shared options](#module-shared-options)" section at the module documentation for
   remaining options.
 
   ## Examples
@@ -1030,7 +1058,7 @@ defmodule Ecto.Repo do
   """
   @callback insert_all(
               schema_or_source :: binary | {binary, module} | module,
-              entries :: [map | [{atom, term | Ecto.Query.t}]],
+              entries :: [map | [{atom, term | Ecto.Query.t()}]],
               opts :: Keyword.t()
             ) :: {integer, nil | [term]}
 
@@ -1077,7 +1105,7 @@ defmodule Ecto.Repo do
     * `:stale_error_message` - The message to add to the configured
       `:stale_error_field` when stale errors happen, defaults to "is stale".
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Examples
 
@@ -1224,7 +1252,7 @@ defmodule Ecto.Repo do
     * `:stale_error_message` - The message to add to the configured
       `:stale_error_field` when stale errors happen, defaults to "is stale".
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Example
 
@@ -1267,7 +1295,7 @@ defmodule Ecto.Repo do
       `:stale_error_field` when stale errors happen, defaults to "is stale".
       Only applies to updates.
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Example
 
@@ -1309,7 +1337,7 @@ defmodule Ecto.Repo do
     * `:stale_error_message` - The message to add to the configured
       `:stale_error_field` when stale errors happen, defaults to "is stale".
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Example
 
@@ -1398,7 +1426,7 @@ defmodule Ecto.Repo do
 
   ## Options
 
-  See the "Shared options" section at the module documentation for more options.
+  See the "[Shared options](#module-shared-options)" section at the module documentation for more options.
 
   ## Examples
 
@@ -1408,9 +1436,9 @@ defmodule Ecto.Repo do
         MyRepo.update!(change(alice, balance: alice.balance - 10))
         MyRepo.update!(change(bob, balance: bob.balance + 10))
       end)
-      
+
       # When passing a function of arity 1, it receives the repository itself
-      MyRepo.transaction(fn repo -> 
+      MyRepo.transaction(fn repo ->
         repo.insert!(%Post{})
       end)
 
